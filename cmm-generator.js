@@ -9,11 +9,12 @@ let cmmIndicators; // a place to store the json
 function setKey() {
     let apikey = document.getElementById("api-key");
     key = apikey.value;
-    document.getElementById("buildcmm").disabled = true;
     getCmmData();
 }
 
 function getCmmData() {
+    document.getElementById("buildcmm").disabled = true; // disable the button
+
     let headers = new Headers();
     headers.set('Authorization', 'Bearer ' + key);
 
