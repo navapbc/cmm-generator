@@ -4,4 +4,4 @@ This tool fetches data from AirTable and generates a nicely-formatted Capability
 
 To use, clone this repo to your machine, paste your AirTable API key into ```auth.js```, and open ```index.html``` in the browser of your choice.
 
-Or, just visit the github pages deployment and paste your API key there.
+Or, just visit the [github pages deployment](https://navapbc.github.io/cmm-generator/) and paste your API key there.
