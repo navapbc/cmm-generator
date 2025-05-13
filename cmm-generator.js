@@ -8,11 +8,10 @@ let cmmIndicators; // a place to store the json
 
 function setKey() {
     let apikey = document.getElementById("api-key");
-    key = apikey.value;
-    getCmmData();
+    getCmmData(apikey.value);
 }
 
-function getCmmData() {
+function getCmmData(key) {
     document.getElementById("buildcmm").disabled = true; // disable the button
     document.getElementById("api-form-error").innerText = "";
     document.getElementById("apiform").style.display = "none";
@@ -28,6 +27,11 @@ function getCmmData() {
         .then(response => response.json())
         .then(json => {
             if (json.records) {
+                if (localStorage.getItem("cmm-airtable-key") && localStorage.getItem("cmm-airtable-key") != key) {
+                    localStorage.setItem("cmm-airtable-key", key);
+                } else if (!localStorage.getItem("cmm-airtable-key")) {
+                    localStorage.setItem("cmm-airtable-key", key);
+                }
                 buildDocument(json.records);
             } else {
                 document.getElementById("buildcmm").disabled = false;
@@ -96,4 +100,6 @@ function buildDocument(indicators) {
     document.getElementById("intro").remove();
 }
 
-key && getCmmData();
+if (localStorage.getItem("cmm-airtable-key")) {
+    getCmmData(localStorage.getItem("cmm-airtable-key"));
+}
