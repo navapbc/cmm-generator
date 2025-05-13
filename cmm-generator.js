@@ -34,7 +34,8 @@ function buildDocument(indicators) {
 
     let indicatorSection = document.getElementById("cmm-indicators");
     document.querySelector("title").innerText = "WIC MIS Capability Maturity Model";
-    indicatorSection.insertAdjacentHTML("beforebegin", `<h1>WIC MIS Capability Maturity Model</h1>`);
+    document.querySelector("main").id = "cmm";
+    indicatorSection.innerHTML += `<h1>WIC MIS Capability Maturity Model</h1>`;
     indicatorSection.innerHTML += `<nav id="toc-main"><ul></ul></nav>`;
 
     indicators.forEach(indicator => {
@@ -45,7 +46,7 @@ function buildDocument(indicators) {
             capability = indicator.fields["Capability Name"][0];
             indicatorSection.innerHTML += `<h2 id="cap${capabilityAnchor}">${capability}</h2>`;
             tocID = "toc-" + capabilityAnchor;
-            indicatorSection.innerHTML += `<nav id="${tocID}"><ul></ul></nav>`;
+            indicatorSection.innerHTML += `<nav id="${tocID}" class="toc-section"><ul></ul></nav>`;
             document.querySelector("#toc-main ul").innerHTML += `<li><a href="#cap${capabilityAnchor}">${capability}</a></li>`;
         }
 
@@ -73,6 +74,13 @@ function buildDocument(indicators) {
                             </table>`;
         document.querySelector(`#${tocID} ul`).innerHTML += `<li><a href="#${indicatorAnchor}">${indicator.fields.Indicator}</a></li>`;
     });
+
+    // originally, each subsection had its own inline mini-TOC. More useful to for them all to be combined in a sidebar. But we'll keep the inline ones for the mobile version.
+    document.querySelector("main").insertAdjacentHTML("afterbegin", `<nav id="toc-sidebar" style="position: sticky; top: 0; max-height: 100vh; overflow-y: scroll;"><ul></ul></nav>`);
+    document.querySelectorAll(".toc-section ul").forEach(toc => {
+        document.querySelector("#toc-sidebar ul").innerHTML += toc.innerHTML;
+    })
+
     document.getElementById("intro").remove();
 }
 
