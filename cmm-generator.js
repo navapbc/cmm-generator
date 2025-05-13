@@ -14,6 +14,7 @@ function setKey() {
 
 function getCmmData() {
     document.getElementById("buildcmm").disabled = true; // disable the button
+    document.getElementById("api-form-error").innerText = "";
 
     let headers = new Headers();
     headers.set('Authorization', 'Bearer ' + key);
@@ -23,7 +24,14 @@ function getCmmData() {
         headers: headers,
     })
         .then(response => response.json())
-        .then(json => buildDocument(json.records));
+        .then(json => {
+            if (json.records) {
+                buildDocument(json.records);
+            } else {
+                document.getElementById("buildcmm").disabled = false;
+                document.getElementById("api-form-error").innerText = `Shucks! Your API key didn't work. Try another.`;
+            }
+        });
 }
 
 function buildDocument(indicators) {

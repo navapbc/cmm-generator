@@ -17,6 +17,9 @@
             font-family: sans-serif;
             line-height: 1.5;
         }
+        #api-form-error {
+            color: red;
+        }
         #cmm-indicators {
             max-width: 1000px;
             margin: 0 auto;
@@ -61,13 +64,16 @@
     </style>
     <main>
         <section id="intro" style="max-width: 500px; margin:0 auto;">
-            <h1>CMM Generator</h1>
-            <p>This tool will grab CMM content from AirTable and format it into a pretty document meeting a variety of needs, with minimal manual cleanup required. Simply enter your AirTable API key below and click "build document!"</p>
-            <label>
-                API Key<br>
-                <input type="text" id="api-key">
-            </label>
-            <button id="buildcmm" onclick="setKey()">Build document!</button>
+            <form id="apiform">
+                <h1>CMM Generator</h1>
+                <p>This tool will grab CMM content from AirTable and format it into a pretty document meeting a variety of needs, with minimal manual cleanup required. Simply enter your AirTable API key below and click "build document!"</p>
+                <label>
+                    API Key<br>
+                    <input type="text" id="api-key">
+                </label>
+                <button id="buildcmm" onclick="setKey()">Build document!</button>
+                <p id="api-form-error"></p>
+            </form>
         </section>
         <div id="cmm-indicators">
         </div>
