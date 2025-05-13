@@ -8,12 +8,14 @@ let cmmIndicators; // a place to store the json
 
 function setKey() {
     let apikey = document.getElementById("api-key");
-    key = apikey.value;
-    getCmmData();
+    getCmmData(apikey.value);
 }
 
-function getCmmData() {
+function getCmmData(key) {
     document.getElementById("buildcmm").disabled = true; // disable the button
+    document.getElementById("api-form-error").innerText = "";
+    document.getElementById("apiform").style.display = "none";
+    document.getElementById("loading-msg").style.display = "flex";
 
     let headers = new Headers();
     headers.set('Authorization', 'Bearer ' + key);
@@ -23,7 +25,21 @@ function getCmmData() {
         headers: headers,
     })
         .then(response => response.json())
-        .then(json => buildDocument(json.records));
+        .then(json => {
+            if (json.records) {
+                if (localStorage.getItem("cmm-airtable-key") && localStorage.getItem("cmm-airtable-key") != key) {
+                    localStorage.setItem("cmm-airtable-key", key);
+                } else if (!localStorage.getItem("cmm-airtable-key")) {
+                    localStorage.setItem("cmm-airtable-key", key);
+                }
+                buildDocument(json.records);
+            } else {
+                document.getElementById("buildcmm").disabled = false;
+                document.getElementById("apiform").style.display = "block";
+                document.getElementById("loading-msg").style.display = "none";
+                document.getElementById("api-form-error").innerText = `Shucks! Your API key didn't work. Try another.`;
+            }
+        });
 }
 
 function buildDocument(indicators) {
@@ -84,4 +100,6 @@ function buildDocument(indicators) {
     document.getElementById("intro").remove();
 }
 
-key && getCmmData();
+if (localStorage.getItem("cmm-airtable-key")) {
+    getCmmData(localStorage.getItem("cmm-airtable-key"));
+}

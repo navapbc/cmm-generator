@@ -17,6 +17,18 @@
             font-family: sans-serif;
             line-height: 1.5;
         }
+        #api-form-error {
+            color: red;
+        }
+        #loading-msg {
+            margin: 3rem auto;
+            width: fit-content;
+            display: none;
+            align-items: center;
+            font-size: 2.3rem;
+            color: #767676;
+            gap: 1rem;
+        }
         #cmm-indicators {
             max-width: 1000px;
             margin: 0 auto;
@@ -61,18 +73,24 @@
     </style>
     <main>
         <section id="intro" style="max-width: 500px; margin:0 auto;">
-            <h1>CMM Generator</h1>
-            <p>This tool will grab CMM content from AirTable and format it into a pretty document meeting a variety of needs, with minimal manual cleanup required. Simply enter your AirTable API key below and click "build document!"</p>
-            <label>
-                API Key<br>
-                <input type="text" id="api-key">
-            </label>
-            <button id="buildcmm" onclick="setKey()">Build document!</button>
+            <form id="apiform">
+                <h1>CMM Generator</h1>
+                <p>This tool will grab CMM content from AirTable and format it into a pretty document meeting a variety of needs, with minimal manual cleanup required. Simply enter your AirTable API key below and click "build document!"</p>
+                <label>
+                    API Key<br>
+                    <input type="text" id="api-key">
+                </label>
+                <button id="buildcmm" onclick="setKey()">Build document!</button>
+                <p id="api-form-error"></p>
+            </form>
+            <div id="loading-msg">
+                <span>Fetching CMM content</span>
+                <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" width="64px" height="64px" viewBox="0 0 128 128" xml:space="preserve"><g><path d="M64 9.75A54.25 54.25 0 0 0 9.75 64H0a64 64 0 0 1 128 0h-9.75A54.25 54.25 0 0 0 64 9.75z" fill="#767676"/><animateTransform attributeName="transform" type="rotate" from="0 64 64" to="360 64 64" dur="1000ms" repeatCount="indefinite"></animateTransform></g></svg>
+            </div>
         </section>
         <div id="cmm-indicators">
         </div>
     </main>
-    <script src="auth.js"></script>
     <script src="cmm-generator.js"></script>
 </body>
 </html>
