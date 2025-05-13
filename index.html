@@ -17,8 +17,49 @@
             font-family: sans-serif;
             line-height: 1.5;
         }
+        #cmm-indicators {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        #toc-sidebar ul {
+            list-style: none;
+            padding-left: 3.5rem;
+            text-indent: -2rem;
+        }
+        #toc-sidebar ul li {
+            margin-bottom: 1rem;
+        }
+        #toc-sidebar ul li:hover {
+            text-decoration: underline;
+        }
+        #toc-sidebar a {
+            text-decoration: none;
+        }
+        #toc-sidebar a, #toc-sidebar a:visited {
+            color: blue;
+        }
+        #toc-main, .toc-section {
+            display: none;
+        }
+        #cmm {
+            display: grid;
+            grid-template-columns: 20rem 1fr;
+            max-width: 100rem;
+            gap: 1rem;
+        }
+        @media screen and (max-width: 950px) {
+            #cmm {
+                display: block;
+            }
+            #toc-main, .toc-section {
+                display: block;
+            }
+            #toc-sidebar {
+                display:none;
+            }
+        }
     </style>
-    <main style="max-width:1000px; margin:0 auto;">
+    <main>
         <section id="intro" style="max-width: 500px; margin:0 auto;">
             <h1>CMM Generator</h1>
             <p>This tool will grab CMM content from AirTable and format it into a pretty document meeting a variety of needs, with minimal manual cleanup required. Simply enter your AirTable API key below and click "build document!"</p>
@@ -28,8 +69,8 @@
             </label>
             <button id="buildcmm" onclick="setKey()">Build document!</button>
         </section>
-        <section id="cmm-indicators">
-        </section>
+        <div id="cmm-indicators">
+        </div>
     </main>
     <script src="auth.js"></script>
     <script src="cmm-generator.js"></script>
